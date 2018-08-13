@@ -1,0 +1,34 @@
+({
+   doInit : function(component, event, helper) {
+      $A.createComponent(
+         "c:RelatedProjects",
+         {
+ 
+         },
+         function(newCmp){
+            if (component.isValid()) {
+               component.set("v.body", newCmp);
+            }
+         }
+      );
+   },
+   navigateComponent : function(component,event,helper) {
+      try{
+          $A.createComponent(
+         "c:RelatedTasks",
+         {
+             "projId": event.getParam("id")
+         },
+         function(newCmp){
+            if (component.isValid()) {
+                component.set("v.body", newCmp);
+            }
+         }
+      );
+          console.log("projectmanager "+event.getParam("id"));
+      } 
+      catch(error){
+          console.error(error);
+      }
+   }
+})

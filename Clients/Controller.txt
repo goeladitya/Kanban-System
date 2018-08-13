@@ -1,0 +1,35 @@
+({
+	doInit : function(component, event, helper) {
+		var action= component.get("c.getClients");
+        action.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.clients", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action);
+	},
+    addClient: function(component, event, helper){
+        var client= component.get("v.client");
+        var action= component.get("c.addClient");
+        action.setParams({ 
+        	"client": client
+    	});
+        action.setCallback(this, function(a) {
+               var state = a.getState();
+                if (state === "SUCCESS") {
+                    var newClient= {'sobjectType': 'Client__c',
+                                  'Name': '',
+                                  'Email__c': '',
+                                  'Phone__c': ''};
+                    component.set("v.client", newClient);
+                    var name = a.getReturnValue();
+                   	alert("hello from here "+name);
+                }
+            if(state === "ERROR"){
+                console.log("!!!!!!!!!!!!!!");
+            }
+            });
+        $A.enqueueAction(action)
+    }
+})

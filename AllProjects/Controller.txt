@@ -1,0 +1,44 @@
+({
+	doInit: function(component, event, helper){
+        var action1= component.get("c.getAllPendingProjects");
+        action1.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.pendingprojects", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action1);
+        
+        var action2= component.get("c.getAllCompletedProjects");
+        action2.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.completedprojects", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action2);
+    },
+    createProject: function(component, event, helper){
+        var project= component.get("v.project");
+        var action= component.get("c.saveProject");
+        action.setParams({
+            "project": project
+    	});
+        action.setCallback(this, function(a) {
+               var state = a.getState();
+                if (state === "SUCCESS") {
+                    var newProj= {'sobjectType': 'Project__c',
+                                  'Name': '',
+                                  'Project_Manager__c': '',
+                                  'Client__c': ''};
+                    component.set("v.project", newProj);
+                    var name = a.getReturnValue();
+                   	alert("hello from here"+name);
+                }
+            if(state === "ERROR"){
+                console.log("!!!!!!!!!!!!!!");
+            }
+            });
+        $A.enqueueAction(action)
+    }
+})

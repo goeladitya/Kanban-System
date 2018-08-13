@@ -1,0 +1,15 @@
+public class GetTickets {
+    static Id id= System.UserInfo.getUserId();
+	@AuraEnabled
+    public static List<Ticket__c> getNewTickets(){
+        return new List<Ticket__c>([Select Id,Name, Description__c, Time_Log__c, Status__c From Ticket__c Where Status__c='New' AND Worker__r.SFDC_User__c=:id]);
+    }
+    @AuraEnabled
+    public static List<Ticket__c> getPendingTickets(){
+        return new List<Ticket__c>([Select Id,Name, Description__c, Time_Log__c, Status__c From Ticket__c Where Status__c='In Progress' AND Worker__r.SFDC_User__c=:id]);
+    }
+    @AuraEnabled
+    public static List<Ticket__c> getCompletedTickets(){
+        return new List<Ticket__c>([Select Id,Name, Description__c, Time_Log__c, Status__c From Ticket__c Where Status__c='Completed' AND Worker__r.SFDC_User__c=:id]);
+    }
+}

@@ -1,0 +1,57 @@
+({
+	doInit : function(component, event, helper) {
+        var projId= component.get("v.projId");
+        console.log("task1 "+projId);
+		var action1= component.get("c.getPendingTasks");
+        action1.setParams({"projId": projId});
+        action1.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.pendingtasks", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action1);
+        
+        var action2= component.get("c.getCompletedTasks");
+        action2.setParams({"projId": projId});
+        console.log("task2 "+projId);
+        action2.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.completedtasks", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action2);
+	},
+    createTask: function(component, event, helper){
+        console.log("------------");
+        var projId= component.get("v.projId");
+        var task= component.get("v.task");
+        var action= component.get("c.saveTask");
+        action.setParams({ 
+        	"task": task,
+            "projId": projId
+    	});
+        console.log("++++++++++++++++");
+        action.setCallback(this, function(a) {
+            console.log("===============");
+               var state = a.getState();
+                if (state === "SUCCESS") {
+                    console.log("/////////////////");
+                    var newTask= {'sobjectType': 'Task__c',
+                                  'Name': '',
+                                  'Estimated_Time__c': '',
+                                  'Team_Leader__c': '',
+                                  'Project__c': 'projId'};
+                    component.set("v.task", newTask);
+                    var name = a.getReturnValue();
+                   	alert("hello from here"+name);
+                }
+            if(state === "ERROR"){
+                console.log("!!!!!!!!!!!!!!");
+            }
+            });
+        console.log("************");
+        $A.enqueueAction(action)
+    }
+})

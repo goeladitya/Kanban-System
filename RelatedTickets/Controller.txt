@@ -1,0 +1,60 @@
+({
+	doInit : function(component, event, helper) {
+        var taskId= component.get("v.taskId");
+		var action= component.get("c.getRelatedTickets");
+        action.setParams({"taskId": taskId});
+        action.setCallback(this, function(response){
+            var list= response.getReturnValue();
+            var newlist= [];
+            var pendinglist= [];
+            var completedlist= [];
+            for(var i= 0; i<list.length; i++){
+                var item= list[i];
+                if(item.Status__c==='New'){
+                    newlist.push(item);
+                }
+                if(item.Status__c==='In Progress'){
+                    pendinglist.push(item);
+                }
+                if(item.Status__c==='Completed'){
+                    completedlist.push(item);
+                }
+                
+            }
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.newtickets", newlist);
+                component.set("v.pendingtickets", pendinglist);
+                component.set("v.completedtickets", completedlist);
+            }
+        });
+        $A.enqueueAction(action);
+	},
+    
+    createTicket: function(component, event, helper){
+        var taskId= component.get("v.taskId");
+        var ticket= component.get("v.ticket");
+        var action= component.get("c.saveTicket");
+        action.setParams({ 
+        	"ticket": ticket,
+            "taskId": taskId
+    	});
+        action.setCallback(this, function(a) {
+               var state = a.getState();
+                if (state === "SUCCESS") {
+                    var newTicket= {'sobjectType': 'Ticket__c',
+                                  'Name': '',
+                                  'Desccription': '',
+                                  'Worker__c': '',
+                                  'Task__c': 'taskId'};
+                    component.set("v.ticket", newTicket);
+                    var name = a.getReturnValue();
+                   	alert("hello from here"+name);
+                }
+            if(state === "ERROR"){
+                console.log("!!!!!!!!!!!!!!");
+            }
+            });
+        $A.enqueueAction(action)
+    }
+})

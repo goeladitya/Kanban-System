@@ -1,0 +1,11 @@
+public class GetRelatedProjects {
+    static Id id= System.UserInfo.getUserId();
+    @AuraEnabled
+    public static List<Project__c> getPendingProjects(){
+        return new List<Project__c>([Select Name, Status__c, Client__c, Project_Manager__c From Project__c Where Status__c='In Progress' AND Project_Manager__r.SFDC_User__c=:id]);
+    }
+    @AuraEnabled
+    public static List<Project__c> getCompletedProjects(){
+        return new List<Project__c>([Select Name, Status__c, Client__c, Project_Manager__c From Project__c Where Status__c='Completed' AND Project_Manager__r.SFDC_User__c=:id ]);
+    }
+}

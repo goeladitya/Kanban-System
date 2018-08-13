@@ -1,0 +1,30 @@
+({
+    doInit: function(component, event, helper){
+        var action1= component.get("c.getNewTickets");
+        action1.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.newtickets", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action1);
+        
+        var action2= component.get("c.getPendingTickets");
+        action2.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.pendingtickets", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action2);
+        
+        var action3= component.get("c.getCompletedTickets");
+        action3.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.completedtickets", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action3);
+	}
+})

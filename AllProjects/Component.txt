@@ -1,0 +1,71 @@
+<aura:component controller="GetProjects" implements="force:appHostable" >
+    <aura:attribute name="project" type="Project__c" default="{'sobjectType': 'Project__c'}" />
+	<aura:attribute name="pendingprojects" type="Project__c[]"/>
+    <aura:attribute name="completedprojects" type="Project__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div id="container">
+    <div id="left" class="design slds-card">
+        	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Create Project</h3>
+                <form>
+                    <ui:inputText aura:id="ProjectName" label="Project Name" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.project.Name}"
+                                  required="true" />
+                    <ui:inputText aura:id="ProjectName" label="Project Manager" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.project.Project_Manager__c}"
+                                  required="true" />
+                    <ui:inputText aura:id="ProjectName" label="Client" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.project.Client__c}"
+                                  required="true" />
+                    <ui:button label="Submit" class="slds-button slds-button--neutral"
+                               labelClass="label" press="{!c.createProject}" />
+                </form>	
+            </div>
+        </div>
+    <div id="center" class="design slds-card">
+            <div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Pending Projects</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.pendingprojects.length &gt; 0}">
+                        <aura:iteration items="{!v.pendingprojects}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:ProjectLayout project="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Pending Projects !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+    <div id="right" class="design slds-card">
+            <div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Completed Projects</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.completedprojects.length &gt; 0}">
+                        <aura:iteration items="{!v.completedprojects}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:ProjectLayout project="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Completed Projects !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+        </div>
+</aura:component>

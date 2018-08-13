@@ -1,0 +1,12 @@
+.THIS .design{
+    width: 32%;
+    display: inline-block;
+    margin-right: 17px;
+}
+.THIS #left{
+    float: left;
+    margin-top: 12px;
+}
+.THIS #right{
+    float: right;
+}

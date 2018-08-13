@@ -1,0 +1,19 @@
+<aura:component >
+	     <aura:attribute name="ticket" type="Ticket__c"/>
+		<lightning:recordViewForm aura:id="viewForm" recordId="{!v.ticket.Id}" objectApiName="Ticket__c" >
+        <lightning:layout multipleRows="true" >
+            <lightning:layoutItem size="12" >
+                <lightning:outputField fieldName="Name" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6">
+                <lightning:outputField fieldName="Time_Log__c" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6">
+                <lightning:outputField fieldName="Worker__c" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12">
+                <lightning:outputField fieldName="Description__c" />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </lightning:recordViewForm>
+</aura:component>

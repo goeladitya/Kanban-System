@@ -1,0 +1,17 @@
+.THIS #left{
+    float: left;
+    margin-top:10px;
+    background-color: #09a6ef;
+}
+.THIS #center{
+    margin-left: 25px;
+    margin-right: 25px;
+    background-color: yellow;
+}
+.THIS #right{
+    background-color: #35e052;
+}
+.THIS .design{
+    width: 32%;
+    display: inline-block;    
+}

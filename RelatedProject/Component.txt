@@ -1,0 +1,50 @@
+<aura:component controller="GetRelatedProjects" implements="force:appHostable">
+    <aura:attribute name="pendingproj" type="Project__c[]"/>
+    <aura:attribute name="completedproj" type="Project__c[]"/>
+    <aura:registerEvent name="navigate" type="c:Navigation"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div id="container" >
+    <div id="left" class="design slds-card">
+    	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Pending Projects</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.pendingproj.length &gt; 0}">
+                        <aura:iteration items="{!v.pendingproj}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:ProjectLayout project="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Pending Projects !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+    <div id="right" class="design slds-card">
+    	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Completed Projects</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.completedproj.length &gt; 0}">
+                        <aura:iteration items="{!v.completedproj}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:ProjectLayout project="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Completed Projects !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+        </div>
+</aura:component>

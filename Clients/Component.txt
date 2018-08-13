@@ -1,0 +1,49 @@
+<aura:component controller="Clients" implements="force:appHostable" >
+    <aura:attribute name="client" type="Client__c" default="{'sobjectType': 'Client__c'}" />
+    <aura:attribute name="clients" type="Client__c[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div id="container" >
+    	<div id="left" class="design slds-card">
+        	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Add Client</h3>
+                <form>
+                    <ui:inputText aura:id="ClientName" label="Client Name" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.client.Name}"
+                                  required="true" />
+                    <ui:inputText aura:id="ClientName" label="Email" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.client.Email__c}"
+                                  required="true" />
+                    <ui:inputText aura:id="ClientName" label="Phone" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.client.Phone__c}"
+                                  required="true" />
+                    <ui:button label="Submit" class="slds-button slds-button--neutral"
+                               labelClass="label" press="{!c.addClient}" />
+                </form>	
+            </div>
+        </div>
+    <div id="right" class="design slds-card">
+            <div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Clients</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.clients.length &gt; 0}">
+                        <aura:iteration items="{!v.clients}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:ClientLayout client="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Clients !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+    </div>
+</aura:component>

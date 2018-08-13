@@ -1,0 +1,21 @@
+public with sharing class RelatedTasks {
+	@AuraEnabled
+    public static List<Task__c> getRelatedTasks(String projId){
+        return new List<Task__c>([Select Name, Status__c,Estimated_Time__c, Time_Taken__c From Task__c Where Project__c=:projId Order By Status__c]);
+    }
+    
+    @AuraEnabled
+    public static List<Task__c> getPendingTasks(Id projId){
+        return new List<Task__c>([Select Name, Status__c, Estimated_Time__c, Time_Taken__c From Task__c Where Status__c=:'In Progress' AND Project__c=:projId]);
+    }
+    @AuraEnabled
+    public static List<Task__c> getCompletedTasks(Id projId){
+        return new List<Task__c>([Select Name, Status__c, Estimated_Time__c, Time_Taken__c From Task__c Where Status__c=:'Completed' AND Project__c=:projId]);
+    }
+    @AuraEnabled
+    public static Task__c saveTask(Task__c task, Id projId){
+        task.Project__c= projId;
+        insert task;
+        return task;
+    }
+}

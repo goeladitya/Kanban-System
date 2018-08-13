@@ -1,0 +1,26 @@
+trigger taskUpdate on Ticket__c (after update) {
+    if(Trigger.isAfter) {
+        if(Trigger.isUpdate){
+            try {
+                for (Ticket__c tickets : Trigger.old){
+                    Task__c task= [SELECT Id, Status__c  FROM Task__c WHERE Id = :tickets.Task__c];
+                    
+                    List<Ticket__c> ticket= [SELECT Id, Status__c FROM Ticket__c WHERE Task__c = :task.Id];
+                    boolean flag= true;
+                    for(Ticket__c t: ticket) {
+                        if(t.Status__c!='Completed'){
+                            flag=false;
+                        }  
+                    }
+                    if(flag){
+                        task.Status__c='Completed';
+                    }
+                    update task;
+                }
+            } 
+            catch (Exception e) {
+                System.debug(e);
+            }
+        }
+}
+}

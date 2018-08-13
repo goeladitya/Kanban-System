@@ -1,0 +1,5 @@
+<aura:component implements="force:appHostable" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:Navigation" action="{!c.navigateComponent}" />
+    {!v.body}
+</aura:component>

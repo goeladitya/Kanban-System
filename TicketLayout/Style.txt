@@ -1,0 +1,3 @@
+.THIS .icon svg {
+    fill: red;
+}

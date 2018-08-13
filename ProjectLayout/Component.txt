@@ -1,0 +1,22 @@
+<aura:component >
+	<aura:attribute name="project" type="Project__c"/>
+    <aura:registerEvent name="navigate" type="c:Navigation"/>
+	<lightning:recordViewForm aura:id="viewForm" recordId="{!v.project.Id}" objectApiName="Project__c" >
+        <lightning:layout multipleRows="true" >
+            <lightning:layoutItem size="6" >
+                <lightning:outputField fieldName="Name" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6">
+                <lightning:outputField fieldName="Status__c" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6">
+                <lightning:outputField fieldName="Client__c" />
+            </lightning:layoutItem>
+            <lightning:layoutItem size="6">
+                <lightning:outputField fieldName="Project_Manager__c" />
+            </lightning:layoutItem>
+            <ui:button label="Details" class="slds-button slds-button--neutral"
+                       labelClass="label" press="{!c.navigate}" />
+        </lightning:layout>
+    </lightning:recordViewForm>
+</aura:component>

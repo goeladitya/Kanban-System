@@ -1,0 +1,9 @@
+.THIS .design{
+    width: 48%;
+    display: inline-block;
+}
+.THIS #left{
+    float: left;
+    margin-top: 12px;
+    margin-right: 20px;
+}

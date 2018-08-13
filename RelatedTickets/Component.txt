@@ -1,0 +1,96 @@
+<aura:component controller="RelatedTickets">
+    <aura:attribute name="taskId" type="Id" />
+    <aura:attribute name="ticket" type="Ticket__c" default="{'sobjectType': 'Ticket__c'}"/>
+    <aura:attribute name="newtickets" type="Ticket__c[]"/>
+	<aura:attribute name="pendingtickets" type="Ticket__c[]"/>
+    <aura:attribute name="completedtickets" type="Ticket__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div id="header" >
+        <div id="top" class="slds-card">
+        	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Create Ticket</h3>
+                <form>
+                    <ui:inputText aura:id="TicketName" label="Ticket Name" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.ticket.Name}"
+                                  required="true" />
+                    <ui:inputText aura:id="TicketName" label="Description" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.ticket.Description__c}"
+                                  required="true" />
+                    <ui:inputText aura:id="TicketName" label="Worker" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.ticket.Worker__c}"
+                                  required="true" />
+                    <ui:button label="Submit" class="slds-button slds-button--neutral"
+                               labelClass="label" press="{!c.createTicket}" />
+                </form>	
+            </div>
+        </div>
+    </div>
+    <div id="body">
+        <div id="left" class="design slds-card">
+    	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">New Tickets</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.newtickets.length &gt; 0}">
+                        <aura:iteration items="{!v.newtickets}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:RelatedTicketLayout ticket="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No New Tickets !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+    <div id="center" class="design slds-card">
+    	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Pending Tickets</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.pendingtickets.length > 0}">
+                        <aura:iteration items="{!v.pendingtickets}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:RelatedTicketLayout ticket="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Pending Tickets !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+    <div id="right" class="design slds-card">
+    	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Completed Tickets</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.completedtickets.length > 0}">
+                        <aura:iteration items="{!v.completedtickets}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:RelatedTicketLayout ticket="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Completed Tickets !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+    </div>
+</aura:component>

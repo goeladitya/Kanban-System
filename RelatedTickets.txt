@@ -1,0 +1,13 @@
+public class RelatedTickets {
+	@AuraEnabled
+    public static List<Ticket__c> getRelatedTickets(Id taskId){
+        return new List<Ticket__c>([Select Name, Status__c, Time_Log__c, Worker__c, Description__c From Ticket__c Where Task__c=:taskId]);
+    }
+    
+    @AuraEnabled
+    public static Ticket__c saveTicket(Ticket__c ticket, Id taskId){
+        ticket.Task__c= taskId;
+        insert ticket;
+        return ticket;
+    }
+}

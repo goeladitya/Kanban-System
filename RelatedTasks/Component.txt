@@ -1,0 +1,72 @@
+<aura:component controller="RelatedTasks" implements="force:appHostable" >
+    <aura:attribute name="projId" type="Id" />
+    <aura:attribute name="task" type="Task__c" default="{'sobjectType': 'Task__c'}" />
+	<aura:attribute name="pendingtasks" type="Task__c[]"/>
+    <aura:attribute name="completedtasks" type="Task__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div id="container" >
+        <div id="left" class="design slds-card">
+        	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Create Task</h3>
+                <form>
+                    <ui:inputText aura:id="TaskName" label="Task Name" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.task.Name}"
+                                  required="true" />
+                    <ui:inputText aura:id="TaskName" label="Estimated Time" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.task.Estimated_Time__c}"
+                                  required="true" />
+                    <ui:inputText aura:id="TaskName" label="Team Leader" class="slds-input"
+                                  labelClass="slds-form-element_label"
+                                  value="{!v.task.Team_Leader__c}"
+                                  required="true" />
+                    <ui:button label="Submit" class="slds-button slds-button--neutral"
+                               labelClass="label" press="{!c.createTask}" />
+                </form>	
+            </div>
+        </div>
+    <div id="center" class="design slds-card">
+    	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Pending Tasks</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.pendingtasks.length &gt; 0}">
+                        <aura:iteration items="{!v.pendingtasks}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:IndividualTask task="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Pending Tasks !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+    <div id="right" class="design slds-card">
+    	<div class="slds-p-around_medium">
+                <h3 style="font-weight:bold">Completed Tasks</h3>
+                <ul class="slds-list_vertical slds-has-dividers_top-space">
+                    <aura:if isTrue="{!v.completedtasks.length &gt; 0}">
+                        <aura:iteration items="{!v.completedtasks}" var="item">
+                            
+                                <li class="slds-list__item slds-m-bottom_x-small ">
+                                    <c:IndividualTask task="{!item}"/>
+                                </li>
+                                
+                        </aura:iteration>
+                        <aura:set attribute="else">
+                            <li class="slds-list__item">
+                                <h3 class="slds-text-small slds-text-color_error" style="font-weight:bold">No Completed Tasks !</h3>
+                            </li>
+                    	</aura:set>
+                    </aura:if>
+                </ul>
+            </div>
+    </div>
+    </div>
+</aura:component>

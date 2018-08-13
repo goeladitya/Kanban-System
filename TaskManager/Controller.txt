@@ -1,0 +1,33 @@
+({
+   doInit : function(component, event, helper) {
+      $A.createComponent(
+         "c:MyTasks",
+         {
+ 
+         },
+         function(newCmp){
+            if (component.isValid()) {
+               component.set("v.body", newCmp);
+            }
+         }
+      );
+   },
+   navigateComponent : function(component,event,helper) {
+      try{
+          $A.createComponent(
+         "c:RelatedTickets",
+         {
+             "taskId": event.getParam("id")
+         },
+         function(newCmp){
+            if (component.isValid()) {
+                component.set("v.body", newCmp);
+            }
+         }
+      );
+      }
+      catch(error){
+          console.error(error);
+      }
+   }
+})

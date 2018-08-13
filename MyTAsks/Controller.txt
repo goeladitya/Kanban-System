@@ -1,0 +1,21 @@
+({
+	doInit : function(component, event, helper) {
+		var action1= component.get("c.getPendingTasks");
+        action1.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.pendingtasks", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action1);
+        
+        var action2= component.get("c.getCompletedTasks");
+        action2.setCallback(this, function(response){
+            var state= response.getState();
+            if(component.isValid() && state==="SUCCESS"){
+                component.set("v.completedtasks", response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action2);
+	}
+})

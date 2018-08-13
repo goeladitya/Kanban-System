@@ -1,0 +1,26 @@
+trigger projectUpdate on Task__c (after update) {
+    if(Trigger.isAfter) {
+        if(Trigger.isUpdate){
+            try {
+                for (Task__c tasks: Trigger.old){
+                    Project__c project= [SELECT Id, Status__c  FROM Project__c WHERE Id = :tasks.Project__c];
+                    
+                    List<Task__c> task= [SELECT Id, Status__c FROM Task__c WHERE Project__c = :project.Id];
+                    boolean flag= true;
+                    for(Task__c t: task) {
+                        if(t.Status__c!='Completed'){
+                            flag=false;
+                        }  
+                    }
+                    if(flag){
+                        project.Status__c='Completed';
+                    }
+                    update project;
+                }
+            } 
+            catch (Exception e) {
+                System.debug(e);
+            }
+        }
+        }
+        }
